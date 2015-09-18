@@ -1,0 +1,25 @@
+{
+  "name": "eikonapp2",
+  "version": "1.0.0",
+  "description": "A simple, d",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Eikon",
+    "OpenFin"
+  ],
+  "author": "Graham Clapham",
+  "license": "MIT",
+  "dependencies": {
+    "del": "^2.0.2",
+    "express": "^4.13.3",
+    "gulp": "^3.9.0",
+    "gulp-load-plugins": "^0.10.0",
+    "gulp-webpack": "^1.5.0",
+    "openfin-config-builder": "^1.0.8",
+    "openfin-launcher": "^0.1.4"
+  }
+}
