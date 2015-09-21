@@ -15,7 +15,7 @@ var dist = 'dist/';
 
 
 gulp.task('scripts', function() {
-    return gulp.src('./app/js/main.js')
+    return gulp.src('./app/js/**/*.js')
         .pipe($.webpack(webpackConfig))
         .pipe(gulp.dest(dist + 'js/'))
         //.pipe($.size({ title : 'js' }))
@@ -29,10 +29,12 @@ gulp.task('html', function() {
         .pipe(gulp.dest(dist))
 });
 
+
+
 // copy bowercomponents from app to dist
-gulp.task('fonts', function() {
-    return gulp.src(app + 'fonts/**')
-        .pipe(gulp.dest(dist+'fonts/'))
+gulp.task('vendor', function() {
+    return gulp.src([app  + 'js/jet-1.8.0/*'])
+        .pipe(gulp.dest(dist+"js/jet-1.8.0"))
 });
 
 // copy app.json so it is available to the lancher from the dist directory

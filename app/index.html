@@ -13,27 +13,48 @@
         #messages li:nth-child(odd) { background: #eee; }
     </style>
 </head>
-    <script src="/socket.io/socket.io.js"></script>
-<!--<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>-->
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-    var socket = io();
-
-
-</script>
-
-<script>
-    var socket = io();
-    $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-    });
-</script>
 <body>
 <ul id="messages"></ul>
+<button id="" onclick="broadcastEvt()">Broadcast</button>
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
+<script src="./js/jet-1.8.0/JET.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="./js/main.js"></script>
+<script>
+    var socket = io.connect();
+
+    socket.on('connect', function(value){
+        console.log("THE CONNECTION ON THE HTML PAGE...");
+
+        $('form').submit(function(){
+            socket.emit('chatmessage', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+        socket.on('serverMessage', function(msg){
+            console.log("Chat message in the html file ",msg)
+            $('#messages').append($('<li>').text("From html. "+msg));
+        });
+
+    })
+
+    function broadcastEvt(){
+        console.log("Broadcsting ")
+        socket.emit('chatmessage', "BUTTON CLICKED");
+    }
+
+    var jetReadyCallback = function() {
+        console.log("JET is loaded and ready to be used");
+    };
+
+    JET.onLoad(jetReadyCallback);
+
+    JET.init( { ID:"WebPageID", Title:"My Web Page", Summary:"A sample page for the JET API" } );
+    console.log(JET)
+
+</script>
 </body>
 </html>
