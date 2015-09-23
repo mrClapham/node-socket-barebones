@@ -37,11 +37,11 @@ gulp.task('vendor', function() {
         .pipe(gulp.dest(dist+"js/jet-1.8.0"))
 });
 
-// copy app.json so it is available to the lancher from the dist directory
-//gulp.task('app_json', function() {
-//    return gulp.src('app.json')
-//        .pipe(gulp.dest(dist))
-//});
+// copy app.json so it is available to the launcher from the dist directory.
+gulp.task('app_json', function() {
+    return gulp.src(app + 'app.json')
+        .pipe(gulp.dest(dist))
+});
 
 gulp.task('styles',function(cb) {
 
@@ -97,8 +97,8 @@ gulp.task('clean', function(cb) {
 function createConfig() {
     return openfinConfigBuilder.create({
         startup_app: {
-            name: 'bam_demo',
-            url: 'https://bam-poc-2.herokuapp.com/#/info'
+            name: 'EikonApp2',
+            url: 'https://bam-poc-2.herokuapp.com/#/info -- this is not active yet'
         }
     }, 'app.json');
 }
@@ -106,14 +106,14 @@ function createConfig() {
 function updateConfig() {
     return openfinConfigBuilder.update({
         startup_app: {
-            name: 'bam_demo'
+            name: 'EikonApp2'
         }
     }, 'app.json');
 }
 
 function launchOpenfin () {
     return openfinLauncher.launchOpenFin({
-        configPath: 'file:/' + path.resolve('app.json')
+        configPath: 'file:/' + path.resolve('dist/app.json')
     });
 }
 
@@ -125,10 +125,10 @@ gulp.task('openfin', function() {
 
 
 // by default build project and then watch files in order to trigger livereload
-gulp.task('default', ['html','scripts', 'watch']);
+gulp.task('default', ['app_json', 'html','scripts', 'watch']);
 
 // waits until clean is finished then builds the project
 gulp.task('build', ['clean'], function(){
-    gulp.start(['html','scripts']);
+    gulp.start(['app_json', 'html','scripts']);
 });
 

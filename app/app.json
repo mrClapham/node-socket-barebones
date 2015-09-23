@@ -1,0 +1,20 @@
+{
+  "devtools_port": 9090,
+  "startup_app": {
+    "name": "EikonApp2",
+    "url": "http://localhost:3002/index.html",
+    "uuid": "EikonApp2",
+    "applicationIcon": "http://localhost:3002/favicon.ico",
+    "autoShow": true
+  },
+  "runtime": {
+    "arguments": "",
+    "version": "stable"
+  },
+  "shortcut": {
+    "company": "OpenFin",
+    "description": "Testing inter app communication between OpenFin and Thomson Reuters Eikon.",
+    "icon": "http://localhost:3002/favicon.ico",
+    "name": "EikonApp2"
+  }
+}

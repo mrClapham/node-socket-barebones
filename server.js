@@ -3,10 +3,16 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
-var _interVal;
-
-
 var sessions = new Set();
+var isEikonOpen = function(){
+    var hasEikon = false;
+    sessions.forEach(function(d){
+        if (String(d.handshake.headers.cookie).toLowerCase().search("eikon") != -1) {
+            hasEikon = true;
+        }
+    });
+    return hasEikon;
+};
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -14,17 +20,13 @@ app.get('/', function(req, res){
     res.sendFile('index.html', {"root": __dirname});
 });
 
-//io.on('connection', function(socket){
-//    console.log('a user connected');
-//});
 
 io.on('connection', function(client){
     console.log('a user connected @3002 in the Server.');
     //_interVal = seInterval(function(){})
-
     sessions.add(client);
 
-    client.emit('chatmessage', "Hello - I am the server - talking to you...");
+    console.log("isEikonOpen : ",isEikonOpen());
 
     client.on('disconnect', function(){
         console.log('user disconnected');
@@ -40,6 +42,18 @@ io.on('connection', function(client){
             }
         });
     });
+
+
+    client.on('tr_quote', function(data){
+        console.log('tr_quote: ' + data);
+
+        sessions.forEach(function (socket) {
+            if (socket !== client) {
+                socket.emit('tr_quote_send', data);
+            }
+        });
+    });
+
 });
 
 http.listen(process.env.PORT || 3002, function(){

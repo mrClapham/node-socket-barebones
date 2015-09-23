@@ -14,8 +14,10 @@
     </style>
 </head>
 <body>
+<button id="trQ1">Thomson Reuters</button>
+<button id="trQ2">Apple</button>
+
 <ul id="messages"></ul>
-<button id="" onclick="broadcastEvt()">Broadcast</button>
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
@@ -24,36 +26,6 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="./js/main.js"></script>
 <script>
-    var socket = io.connect();
-
-    socket.on('connect', function(value){
-        console.log("THE CONNECTION ON THE HTML PAGE...");
-
-        $('form').submit(function(){
-            socket.emit('chatmessage', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        socket.on('serverMessage', function(msg){
-            console.log("Chat message in the html file ",msg)
-            $('#messages').append($('<li>').text("From html. "+msg));
-        });
-
-    })
-
-    function broadcastEvt(){
-        console.log("Broadcsting ")
-        socket.emit('chatmessage', "BUTTON CLICKED");
-    }
-
-    var jetReadyCallback = function() {
-        console.log("JET is loaded and ready to be used");
-    };
-
-    JET.onLoad(jetReadyCallback);
-
-    JET.init( { ID:"WebPageID", Title:"My Web Page", Summary:"A sample page for the JET API" } );
-    console.log(JET)
 
 </script>
 </body>
