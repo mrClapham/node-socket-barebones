@@ -23,8 +23,12 @@ app.get('/', function(req, res){
 
 io.on('connection', function(client){
     console.log('a user connected @3002 in the Server.');
-    //_interVal = seInterval(function(){})
     sessions.add(client);
+    // socket.emit('client_added', client);
+    sessions.forEach(function (socket) {
+            console.log("SEssions changed....")
+            socket.emit('sessionsChanged', "SESSIONS CHANGED...");
+    });
 
     console.log("isEikonOpen : ",isEikonOpen());
 
@@ -42,7 +46,6 @@ io.on('connection', function(client){
             }
         });
     });
-
 
     client.on('tr_quote', function(data){
         console.log('tr_quote: ' + data);

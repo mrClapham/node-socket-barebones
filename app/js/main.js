@@ -1,7 +1,10 @@
-JET.init( { ID:"WebPageID", Title:"My Web Page", Summary:"A sample page for the JET API" } );
+try{
+    JET.init( { ID:"WebPageID", Title:"My Web Page", Summary:"A sample page for the JET API" } );
+}catch(err){
+
+}
 
 document.addEventListener('DOMContentLoaded', function(){
-   // alert("DOM LOADED -- hellooo")
     document.querySelector('#trQ1').addEventListener('click', function(){
         trQ1()
     });
@@ -9,10 +12,17 @@ document.addEventListener('DOMContentLoaded', function(){
     document.querySelector('#trQ2').addEventListener('click', function(){
         trQ2()
     });
+
+    document.querySelector('#trQ3').addEventListener('click', function(){
+        launchEikon()
+    });
 });
 
-
 var init = function(){
+
+}
+
+var _onClientAdded = function(){
 
 }
 
@@ -21,9 +31,6 @@ var socket = io.connect();
 
 socket.on('connect', function(value){
     console.log("Socket io connected one the HTML page...");
-    var bbt1 = document.querySelector('#trQ1');
-    console.log("THE BUTTON IS :",bbt1);
-
 
     $('form').submit(function(){
         socket.emit('chatmessage', $('#m').val());
@@ -40,12 +47,11 @@ socket.on('connect', function(value){
         JET.navigate(data);
         $('#messages').append($('<li>').text("Tr data sent. "));
     });
-})
 
-function broadcastEvt(){
-    console.log("Broadcsting ")
-    socket.emit('chatmessage', "BUTTON CLICKED");
-}
+    socket.on("sessionsChanged", function(data){
+        console.log("Session Data = ")
+    })
+});
 
 
 var jetReadyCallback = function() {
@@ -60,14 +66,14 @@ var jetReadyCallback = function() {
         }]
     };
     JET.navigate(data);
-}
+};
 
 JET.onLoad(jetReadyCallback);
 
 /// Thomson Reuters Code...
 tr_OpeneQuote = function(data){
     JET.navigate(data);
-}
+};
 
 trQ1 = function(){
     console.log("TR QUITE ONE FIRED...")
@@ -82,9 +88,13 @@ trQ1 = function(){
     };
 
     socket.emit("tr_quote", data);
-
-    //JET.navigate(data);
 };
+
+launchEikon = function(){
+    fin.desktop.System.launchExternalProcess("C:/\Program Files (x86)/\Thomson Reuters/\Eikon/\Eikon.exe", "", function (result) {
+        console.log("Result UUID is " + result.uuid);
+    });
+}
 
 
 trQ2 = function(){
@@ -97,7 +107,7 @@ trQ2 = function(){
             "RIC": "AAPL.O" // Symbol to use is TRI.N
         }]
     };
-    JET.navigate(data);
+    socket.emit("tr_quote", data);
 };
 
 

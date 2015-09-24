@@ -125,10 +125,10 @@ gulp.task('openfin', function() {
 
 
 // by default build project and then watch files in order to trigger livereload
-gulp.task('default', ['app_json', 'html','scripts', 'watch']);
+gulp.task('default', ['app_json', 'html','scripts', 'vendor', 'watch']);
 
 // waits until clean is finished then builds the project
 gulp.task('build', ['clean'], function(){
-    gulp.start(['app_json', 'html','scripts']);
+    gulp.start(['app_json', 'html','scripts', 'vendor']);
 });
 
