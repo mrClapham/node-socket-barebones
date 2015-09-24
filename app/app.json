@@ -2,7 +2,7 @@
   "devtools_port": 9090,
   "startup_app": {
     "name": "EikonApp2",
-    "url": "http://localhost:3002/index.html",
+    "url": "https://eikon-int-1.herokuapp.com",
     "uuid": "EikonApp2",
     "applicationIcon": "http://localhost:3002/favicon.ico",
     "autoShow": true
