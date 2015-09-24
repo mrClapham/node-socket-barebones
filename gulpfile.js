@@ -126,6 +126,7 @@ gulp.task('openfin', function() {
 
 // by default build project and then watch files in order to trigger livereload
 gulp.task('default', ['app_json', 'html','scripts', 'vendor', 'watch']);
+gulp.task('heroku', ['app_json', 'html','scripts', 'vendor']);
 
 // waits until clean is finished then builds the project
 gulp.task('build', ['clean'], function(){
